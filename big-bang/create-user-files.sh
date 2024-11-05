@@ -3,19 +3,11 @@
 # set environmental variables
 source .env
 
-users_per_file=10000
-number_of_files=$((10000/users_per_file))
-
-FILE_START=1
-FILE_END=$number_of_files
-FILE_COUNT=$FILE_START
-while [[ $FILE_COUNT -le $FILE_END ]]
-do
-
-  user_data='{"users": ['
+create_file() {
+ user_data='{"users": ['
 
   USER_START=1
-  USER_END=$users_per_file
+  USER_END=$1
   USER_COUNT=$USER_START
   while [[ $USER_COUNT -le $USER_END ]]
   do
@@ -53,9 +45,25 @@ do
 
     ((USER_COUNT = USER_COUNT + 1))
   done
-    user_data+="]}"
+  
+  user_data+="]}"
 
-    echo $user_data > import$FILE_COUNT.json
+  echo $user_data > import$FILE_COUNT.json
+}
 
-    ((FILE_COUNT = FILE_COUNT + 1))
+users_per_file=100000
+number_of_files=$((1000000/users_per_file))
+
+FILE_START=1
+FILE_END=$number_of_files
+FILE_COUNT=$FILE_START
+while [[ $FILE_COUNT -le $FILE_END ]]
+do
+  create_file $users_per_file &
+
+  ((FILE_COUNT = FILE_COUNT + 1))
 done
+
+wait
+
+echo "Files created"
