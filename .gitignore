@@ -1,0 +1,4 @@
+big-bang/.env
+big-bang/*.json
+.DS_Store
+big-bang/**/*.json
