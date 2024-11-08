@@ -19,7 +19,7 @@ Import 1 million user's into FusionAuth
   ```
   Create the json files to be used with the Import Users API.
   
-  There will be 10,000 users in each file to generate 1 million users.
+  There will be 100,000 users in each file to generate 1 million users.
 
   bash create-user-files.sh
   ```
